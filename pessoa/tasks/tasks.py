@@ -1,46 +1,31 @@
+# tasks.py
+
 from models.models import Pessoa
+from services.services import incluir_pessoa as service_incluir_pessoa, alterar_pessoa as service_alterar_pessoa, excluir_pessoa as service_excluir_pessoa, buscar_pessoa as service_buscar_pessoa, listar_pessoas as service_listar_pessoas, calcular_peso_ideal_pessoa as service_calcular_peso_ideal_pessoa
 
 class PessoaTask:
     @staticmethod
     def incluir_pessoa(nome, data_nasc, cpf, sexo, altura, peso):
-        return Pessoa.objects.create(
-            nome=nome,
-            data_nasc=data_nasc,
-            cpf=cpf,
-            sexo=sexo,
-            altura=altura,
-            peso=peso
-        )
+        pessoa_dto = PessoaCreateUpdateDTO(nome, data_nasc, cpf, sexo, altura, peso)
+        return service_incluir_pessoa(pessoa_dto)
 
     @staticmethod
     def atualizar_pessoa(id, nome, data_nasc, cpf, sexo, altura, peso):
-        pessoa = Pessoa.objects.get(pk=id)
-        pessoa.nome = nome
-        pessoa.data_nasc = data_nasc
-        pessoa.cpf = cpf
-        pessoa.sexo = sexo
-        pessoa.altura = altura
-        pessoa.peso = peso
-        pessoa.save()
-        return pessoa
+        pessoa_dto = PessoaCreateUpdateDTO(nome, data_nasc, cpf, sexo, altura, peso)
+        return service_alterar_pessoa(id, pessoa_dto)
 
     @staticmethod
     def excluir_pessoa(id):
-        Pessoa.objects.filter(pk=id).delete()
+        return service_excluir_pessoa(id)
 
     @staticmethod
     def buscar_pessoa(id):
-        return Pessoa.objects.get(pk=id)
+        return service_buscar_pessoa(id)
 
     @staticmethod
     def listar_pessoas():
-        return Pessoa.objects.all()
+        return service_listar_pessoas()
 
     @staticmethod
     def calcular_peso_ideal(altura, sexo):
-        if sexo == 'M':
-            return round((72.7 * altura) - 58, 2)
-        elif sexo == 'F':
-            return round((62.1 * altura) - 44.7, 2)
-        else:
-            return None
+        return service_calcular_peso_ideal_pessoa(altura, sexo)
