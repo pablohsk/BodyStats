@@ -1,39 +1,18 @@
-from .models import Pessoa
+from services.services import incluir_pessoa, alterar_pessoa, excluir_pessoa_por_id, buscar_pessoa_por_id, listar_todas_pessoas, calcular_peso_ideal_pessoa
+from DTO.dto import PessoaCreateUpdateDTO
 
-def calcular_peso_ideal(altura, sexo):
-    if sexo == 'M':
-        return round((72.7 * altura) - 58, 2)
-    elif sexo == 'F':
-        return round((62.1 * altura) - 44.7, 2)
-    else:
-        return None
+def criar_pessoa_controller(request):
+    dados_formulario = request.POST
 
-def criar_pessoa(nome, data_nasc, cpf, sexo, altura, peso):
-    return Pessoa.objects.create(
-        nome=nome,
-        data_nasc=data_nasc,
-        cpf=cpf,
-        sexo=sexo,
-        altura=altura,
-        peso=peso
+    pessoa_dto = PessoaCreateUpdateDTO(
+        nome=dados_formulario['nome'],
+        data_nasc=dados_formulario['data_nasc'],
+        cpf=dados_formulario['cpf'],
+        sexo=dados_formulario['sexo'],
+        altura=float(dados_formulario['altura']),
+        peso=float(dados_formulario['peso'])
     )
 
-def atualizar_pessoa(id, nome, data_nasc, cpf, sexo, altura, peso):
-    pessoa = Pessoa.objects.get(pk=id)
-    pessoa.nome = nome
-    pessoa.data_nasc = data_nasc
-    pessoa.cpf = cpf
-    pessoa.sexo = sexo
-    pessoa.altura = altura
-    pessoa.peso = peso
-    pessoa.save()
-    return pessoa
+    incluir_pessoa(pessoa_dto)
 
-def excluir_pessoa(id):
-    Pessoa.objects.filter(pk=id).delete()
-
-def buscar_pessoa(id):
-    return Pessoa.objects.get(pk=id)
-
-def listar_pessoas():
-    return Pessoa.objects.all()
+    return HttpResponse("Pessoa criada com sucesso!")
