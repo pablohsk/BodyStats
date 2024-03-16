@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'pessoa',
 ]
 
 MIDDLEWARE = [
@@ -78,8 +79,8 @@ DEFAULT_CHARSET = 'utf-8'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bd2',
-        'USER': 'pablodias',
+        'NAME': 'bd3',
+        'USER': 'postgres',
         'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432',
