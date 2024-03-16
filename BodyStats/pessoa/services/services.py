@@ -1,4 +1,4 @@
-from .controller import (
+from controller.controller import (
     criar_pessoa,
     atualizar_pessoa,
     excluir_pessoa,
@@ -6,7 +6,7 @@ from .controller import (
     listar_pessoas,
     calcular_peso_ideal
 )
-from .dto import PessoaCreateUpdateDTO, PessoaViewDTO
+from DTO.dto import PessoaCreateUpdateDTO, PessoaViewDTO
 
 def incluir_pessoa(pessoa_dto):
     return criar_pessoa(pessoa_dto.nome, pessoa_dto.data_nasc, pessoa_dto.cpf, pessoa_dto.sexo, pessoa_dto.altura, pessoa_dto.peso)
