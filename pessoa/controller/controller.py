@@ -1,5 +1,5 @@
 import logging
-from models.models import Pessoa
+from pessoa.models.models import Pessoa
 
 # Configuração do logger
 logger = logging.getLogger(__name__)
@@ -38,5 +38,9 @@ def buscar_pessoa(id):
     return Pessoa.objects.get(pk=id)
 
 def listar_pessoas():
+    logger.info("Solicitação recebida para listar todas as pessoas")
+    return Pessoa.objects.all()
+
+def calcular_peso_ideal():
     logger.info("Solicitação recebida para listar todas as pessoas")
     return Pessoa.objects.all()

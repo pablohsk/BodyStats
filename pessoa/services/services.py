@@ -1,5 +1,9 @@
+import json
+from django.http import JsonResponse
+from pessoa.DTO.dto import PessoaCreateUpdateDTO
+from pessoa.controller.controller import criar_pessoa
 import logging
-from controller.controller import (
+from pessoa.controller.controller import (
     criar_pessoa,
     atualizar_pessoa,
     excluir_pessoa,
@@ -7,16 +11,40 @@ from controller.controller import (
     listar_pessoas,
     calcular_peso_ideal
 )
-from DTO.dto import PessoaCreateUpdateDTO, PessoaViewDTO
+from pessoa.DTO.dto import PessoaCreateUpdateDTO, PessoaViewDTO
 from typing import List
 
 logger = logging.getLogger(__name__)
 
-def incluir_pessoa(pessoa_dto: PessoaCreateUpdateDTO):
-    logger.info(f"Solicitação recebida para incluir pessoa: {pessoa_dto.__dict__}")
-    pessoa = criar_pessoa(pessoa_dto)
-    logger.info(f"Pessoa incluída com sucesso: {pessoa.__dict__}")
-    return pessoa
+def incluir_pessoa(request):
+    if request.method == 'POST':
+        # Verifica se a solicitação possui dados JSON no corpo
+        if request.body:
+            # Decodifica os dados JSON para um dicionário Python
+            json_data = json.loads(request.body)
+            # Cria um objeto PessoaCreateUpdateDTO com os dados
+            pessoa_dto = PessoaCreateUpdateDTO(
+                nome=json_data.get('nome'),
+                data_nasc=json_data.get('data_nasc'),
+                cpf=json_data.get('cpf'),
+                sexo=json_data.get('sexo'),
+                altura=json_data.get('altura'),
+                peso=json_data.get('peso')
+            )
+            # Chama a função criar_pessoa com os argumentos necessários
+            pessoa = criar_pessoa(
+                pessoa_dto.nome,
+                pessoa_dto.data_nasc,
+                pessoa_dto.cpf,
+                pessoa_dto.sexo,
+                pessoa_dto.altura,
+                pessoa_dto.peso
+            )
+            return JsonResponse({'message': 'Pessoa criada com sucesso!'}, status=201)
+        else:
+            return JsonResponse({'error': 'Nenhum dado JSON foi enviado no corpo da solicitação.'}, status=400)
+    else:
+        return JsonResponse({'error': 'Método não permitido.'}, status=405)
 
 def alterar_pessoa(id, pessoa_dto: PessoaCreateUpdateDTO):
     logger.info(f"Solicitação recebida para alterar pessoa: id={id}, dados={pessoa_dto.__dict__}")
