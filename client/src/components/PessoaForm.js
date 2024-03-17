@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './PessoaForm.css'; // Importação do arquivo CSS para estilização
+import './PessoaForm.css';
 
 const PessoaForm = () => {
   const [pessoa, setPessoa] = useState({
@@ -25,7 +25,6 @@ const PessoaForm = () => {
 
     try {
       await axios.post('http://localhost:8000/pessoa/incluir/', pessoa);
-      // Limpar os campos do formulário após o envio bem-sucedido
       setPessoa({
         nome: '',
         data_nasc: '',

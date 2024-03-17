@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
-import PessoaList from './components/PessoaList'; // Alterado para PessoaList
-import PessoaForm from './components/PessoaForm'; // Alterado para PessoaForm
-import PessoaDetails from './components/PessoaDetails'; // Alterado para PessoaDetails
+import PessoaList from './components/PessoaList';
+import PessoaForm from './components/PessoaForm';
+import PessoaDetails from './components/PessoaDetails';
 import './App.css';
 
 const App = () => {
@@ -30,7 +30,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<PessoaList />} />
             <Route path="/pessoas/novo" element={<PessoaForm />} />
-            <Route path="/pessoas/:id" element={<PessoaDetails />} /> {/* Alterado o caminho do componente */}
+            <Route path="/pessoas/:id" element={<PessoaDetails />} />
             <Route path="*" element={<h2>Página não encontrada</h2>} />
           </Routes>
         </main>

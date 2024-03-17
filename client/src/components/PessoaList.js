@@ -38,7 +38,7 @@ const PessoaList = () => {
     try {
       const response = await axios.get(`http://localhost:8000/pessoa/${termoPesquisa}`);
       if (response.data) {
-        setPessoasEncontradas([response.data]); // Colocando a pessoa encontrada em um array para manter a estrutura consistente
+        setPessoasEncontradas([response.data]);
         setSucessoMensagem(`Resultados da pesquisa para "${termoPesquisa}": 1 pessoa encontrada.`);
       } else {
         setPessoasEncontradas([]);
@@ -54,7 +54,7 @@ const PessoaList = () => {
       await axios.delete(`http://localhost:8000/pessoa/excluir/${pessoaSelecionada.nome}`);
       fetchPessoas();
       setSucessoMensagem('Pessoa excluída com sucesso.');
-      toggleModalExcluir(); // Fechar o modal após a exclusão
+      toggleModalExcluir();
     } catch (error) {
       console.error('Erro ao excluir pessoa:', error);
     }
@@ -63,7 +63,7 @@ const PessoaList = () => {
   const handleCalcularPesoIdeal = async () => {
     try {
       const response = await axios.get(`http://localhost:8000/pessoa/calcular-peso-ideal/${pessoaSelecionada.nome}`);
-      const pesoIdealFormatted = response.data.peso_ideal.toFixed(2); // Formatar para duas casas decimais
+      const pesoIdealFormatted = response.data.peso_ideal.toFixed(2);
       setModalIsOpen(true);
       setSucessoMensagem(`O peso ideal para ${pessoaSelecionada.nome} é: ${pesoIdealFormatted}kg`);
     } catch (error) {
@@ -76,7 +76,7 @@ const PessoaList = () => {
       await axios.put(`http://localhost:8000/pessoa/alterar/${pessoaSelecionada.nome}`, novaPessoa);
       setSucessoMensagem('Pessoa alterada com sucesso.');
       fetchPessoas();
-      toggleModalAlterar(); // Fechar o modal após a alteração
+      toggleModalAlterar();
     } catch (error) {
       console.error('Erro ao alterar pessoa:', error);
     }
@@ -84,7 +84,7 @@ const PessoaList = () => {
 
   const handleSelecionarPessoa = (pessoa) => {
     setPessoaSelecionada(pessoa);
-    setNovaPessoa(pessoa); // Definir a pessoa selecionada como a nova pessoa para edição
+    setNovaPessoa(pessoa);
   };
  
   const handleKeyDown = (e) => {
@@ -93,12 +93,10 @@ const PessoaList = () => {
     }
   };
 
-  // Função para abrir e fechar o modal de excluir
   const toggleModalExcluir = () => {
     setModalExcluirAberto(!modalExcluirAberto);
   };
 
-  // Função para abrir e fechar o modal de alterar
   const toggleModalAlterar = () => {
     setModalAlterarAberto(!modalAlterarAberto);
   };
@@ -157,8 +155,6 @@ const PessoaList = () => {
         <p className="mensagem-sucesso">{sucessoMensagem}</p>
         <button className="button-fechar" onClick={() => setModalIsOpen(false)}>Fechar</button>
       </Modal>
-
-      {/* Modal de Excluir Pessoa */}
       <Modal
         isOpen={modalExcluirAberto}
         onRequestClose={toggleModalExcluir}
@@ -173,8 +169,6 @@ const PessoaList = () => {
           <button className="button-cinza" onClick={toggleModalExcluir}>Cancelar</button>
         </div>
       </Modal>
-
-      {/* Modal de Alterar Pessoa */}
       <Modal
         isOpen={modalAlterarAberto}
         onRequestClose={toggleModalAlterar}
@@ -183,7 +177,6 @@ const PessoaList = () => {
         overlayClassName="overlay"
       >
         <h2>Alterar Pessoa</h2>
-        {/* Campos para editar os detalhes da pessoa */}
         <input
           type="text"
           placeholder="Nome"
