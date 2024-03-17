@@ -1,5 +1,4 @@
-# tasks.py
-
+from pessoa.DTO.dto import PessoaCreateUpdateDTO
 from pessoa.models.models import Pessoa
 from pessoa.services.services import incluir_pessoa as service_incluir_pessoa, alterar_pessoa as service_alterar_pessoa, excluir_pessoa as service_excluir_pessoa, buscar_pessoa as service_buscar_pessoa, listar_pessoas as service_listar_pessoas, calcular_peso_ideal_pessoa as service_calcular_peso_ideal_pessoa
 

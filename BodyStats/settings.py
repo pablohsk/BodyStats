@@ -78,7 +78,7 @@ DEFAULT_CHARSET = 'utf-8'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bd4',
+        'NAME': 'bd50',
         'USER': 'postgres',
         'PASSWORD': 'root',
         'HOST': 'localhost',

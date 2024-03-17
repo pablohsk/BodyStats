@@ -1,72 +1,112 @@
 import json
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 from pessoa.DTO.dto import PessoaCreateUpdateDTO
-from pessoa.controller.controller import criar_pessoa
+from pessoa.controller.controller import criar_pessoa, atualizar_pessoa, listar_pessoas
+from pessoa.models.models import Pessoa
+
 import logging
-from pessoa.controller.controller import (
-    criar_pessoa,
-    atualizar_pessoa,
-    excluir_pessoa,
-    buscar_pessoa,
-    listar_pessoas,
-    calcular_peso_ideal
-)
-from pessoa.DTO.dto import PessoaCreateUpdateDTO, PessoaViewDTO
-from typing import List
 
 logger = logging.getLogger(__name__)
 
 def incluir_pessoa(request):
     if request.method == 'POST':
-        # Verifica se a solicitação possui dados JSON no corpo
-        if request.body:
-            # Decodifica os dados JSON para um dicionário Python
-            json_data = json.loads(request.body)
-            # Cria um objeto PessoaCreateUpdateDTO com os dados
-            pessoa_dto = PessoaCreateUpdateDTO(
-                nome=json_data.get('nome'),
-                data_nasc=json_data.get('data_nasc'),
-                cpf=json_data.get('cpf'),
-                sexo=json_data.get('sexo'),
-                altura=json_data.get('altura'),
-                peso=json_data.get('peso')
-            )
-            # Chama a função criar_pessoa com os argumentos necessários
-            pessoa = criar_pessoa(
-                pessoa_dto.nome,
-                pessoa_dto.data_nasc,
-                pessoa_dto.cpf,
-                pessoa_dto.sexo,
-                pessoa_dto.altura,
-                pessoa_dto.peso
-            )
-            return JsonResponse({'message': 'Pessoa criada com sucesso!'}, status=201)
-        else:
-            return JsonResponse({'error': 'Nenhum dado JSON foi enviado no corpo da solicitação.'}, status=400)
+        json_data = json.loads(request.body)
+        pessoa_dto = PessoaCreateUpdateDTO(**json_data)
+        pessoa = criar_pessoa(
+            pessoa_dto.nome, pessoa_dto.data_nasc, pessoa_dto.cpf,
+            pessoa_dto.sexo, pessoa_dto.altura, pessoa_dto.peso
+        )
+        return JsonResponse({'message': 'Pessoa criada com sucesso!'}, status=201)
     else:
         return JsonResponse({'error': 'Método não permitido.'}, status=405)
 
-def alterar_pessoa(id, pessoa_dto: PessoaCreateUpdateDTO):
-    logger.info(f"Solicitação recebida para alterar pessoa: id={id}, dados={pessoa_dto.__dict__}")
-    pessoa = atualizar_pessoa(id, pessoa_dto)
-    logger.info(f"Pessoa alterada com sucesso: id={pessoa.id}")
-    return pessoa
+def alterar_pessoa(request, nome): 
+    
+    if request.method == 'PUT':
+        if request.body:
+            json_data = json.loads(request.body)
+            data_nasc = json_data.get('data_nasc')
+            cpf = json_data.get('cpf')
+            sexo = json_data.get('sexo')
+            altura = json_data.get('altura')
+            peso = json_data.get('peso')
 
-def buscar_pessoa_por_id(id):
-    logger.info(f"Solicitação recebida para buscar pessoa por ID: id={id}")
-    pessoa = buscar_pessoa(id)
+            pessoa_atualizada = atualizar_pessoa(
+                nome, data_nasc, cpf, sexo, altura, peso)
+
+            if pessoa_atualizada:
+                return JsonResponse({'message': 'Pessoa atualizada com sucesso!'}, status=200)
+            else:
+                return JsonResponse({'error': 'Pessoa não encontrada.'}, status=404)
+        else:
+            return JsonResponse({'error': 'Nenhum dado JSON foi enviado no corpo da solicitação.'}, status=400)
+    else:
+        return JsonResponse({'error': 'Método não permitido. Utilize o método PUT.'}, status=405)
+
+def buscar_pessoa(request, parametro):
+    logger.info(f"Solicitação recebida para buscar pessoa por parâmetro: {parametro}")
+    
+    pessoa = get_object_or_404(Pessoa, nome=parametro)
     logger.info(f"Pessoa encontrada: {pessoa.__dict__}")
-    return PessoaViewDTO(id=pessoa.id, nome=pessoa.nome, data_nasc=pessoa.data_nasc, cpf=pessoa.cpf, sexo=pessoa.sexo, altura=pessoa.altura, peso=pessoa.peso)
 
-def listar_todas_pessoas() -> List[PessoaViewDTO]:
+    return JsonResponse({
+        'id': pessoa.id, 
+        'nome': pessoa.nome, 
+        'data_nasc': pessoa.data_nasc, 
+        'cpf': pessoa.cpf, 
+        'sexo': pessoa.sexo, 
+        'altura': pessoa.altura, 
+        'peso': pessoa.peso
+    })
+
+def listar_todas_pessoas(request):
     logger.info("Solicitação recebida para listar todas as pessoas")
     pessoas = listar_pessoas()
-    pessoas_dto = [PessoaViewDTO(id=pessoa.id, nome=pessoa.nome, data_nasc=pessoa.data_nasc, cpf=pessoa.cpf, sexo=pessoa.sexo, altura=pessoa.altura, peso=pessoa.peso) for pessoa in pessoas]
+    pessoas_dto = [{
+        'id': pessoa.id, 
+        'nome': pessoa.nome, 
+        'data_nasc': pessoa.data_nasc, 
+        'cpf': pessoa.cpf, 
+        'sexo': pessoa.sexo, 
+        'altura': pessoa.altura, 
+        'peso': pessoa.peso
+    } for pessoa in pessoas]
     logger.info(f"Lista de pessoas retornada: {pessoas_dto}")
-    return pessoas_dto
+    return JsonResponse({'pessoas': pessoas_dto})
 
-def calcular_peso_ideal_pessoa(altura, sexo):
-    logger.info(f"Solicitação recebida para calcular peso ideal: altura={altura}, sexo={sexo}")
-    peso_ideal = calcular_peso_ideal(altura, sexo)
-    logger.info(f"Peso ideal calculado: {peso_ideal}")
-    return peso_ideal
+def calcular_peso_ideal_pessoa(request, nome):
+    logger.info(f"Solicitação recebida para calcular peso ideal para a pessoa: {nome}")
+    try:
+        pessoa = Pessoa.objects.get(nome=nome)
+        logger.info(f"Pessoa encontrada: {pessoa.nome}")
+        
+        altura = float(pessoa.altura) 
+        sexo = pessoa.sexo
+        
+        if sexo == 'M':
+            peso_ideal = (72.7 * altura) - 58
+        elif sexo == 'F':
+            peso_ideal = (62.1 * altura) - 44.7
+        else:
+            logger.error("Sexo inválido. O sexo deve ser 'M' para masculino ou 'F' para feminino.")
+            return JsonResponse({'error': 'Sexo inválido'}, status=400)
+        
+        logger.info(f"Peso ideal calculado para {pessoa.nome}: {peso_ideal}")
+        return JsonResponse({'peso_ideal': peso_ideal}, status=200)
+        
+    except Pessoa.DoesNotExist:
+        logger.error("Pessoa não encontrada.")
+        return JsonResponse({'error': 'Pessoa não encontrada.'}, status=404)
+
+def excluir_pessoa(request, nome):
+    logger.info(f"Solicitação recebida para excluir pessoa por nome: {nome}")
+    
+    try:
+        pessoa = Pessoa.objects.get(nome=nome)
+        pessoa.delete()
+        logger.info(f"Pessoa excluída com sucesso: {nome}")
+        return JsonResponse({'message': f'Pessoa {nome} excluída com sucesso!'}, status=200)
+    except Pessoa.DoesNotExist:
+        logger.info(f"Pessoa não encontrada: {nome}")
+        return JsonResponse({'error': f'Pessoa {nome} não encontrada.'}, status=404)

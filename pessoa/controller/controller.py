@@ -1,7 +1,6 @@
 import logging
 from pessoa.models.models import Pessoa
 
-# Configuração do logger
 logger = logging.getLogger(__name__)
 
 def criar_pessoa(nome, data_nasc, cpf, sexo, altura, peso):
@@ -15,32 +14,23 @@ def criar_pessoa(nome, data_nasc, cpf, sexo, altura, peso):
         peso=peso
     )
 
-def atualizar_pessoa(id, nome, data_nasc, cpf, sexo, altura, peso):
-    logger.info(f"Solicitação recebida para atualizar pessoa: id={id}, nome={nome}, data_nasc={data_nasc}, cpf={cpf}, sexo={sexo}, altura={altura}, peso={peso}")
-    pessoa = Pessoa.objects.get(pk=id)
-    pessoa.nome = nome
-    pessoa.data_nasc = data_nasc
-    pessoa.cpf = cpf
-    pessoa.sexo = sexo
-    pessoa.altura = altura
-    pessoa.peso = peso
-    pessoa.save()
-    logger.info(f"Pessoa atualizada com sucesso: id={pessoa.id}")
-    return pessoa
-
-def excluir_pessoa(id):
-    logger.info(f"Solicitação recebida para excluir pessoa: id={id}")
-    Pessoa.objects.filter(pk=id).delete()
-    logger.info(f"Pessoa excluída com sucesso: id={id}")
-
-def buscar_pessoa(id):
-    logger.info(f"Solicitação recebida para buscar pessoa: id={id}")
-    return Pessoa.objects.get(pk=id)
+def atualizar_pessoa(nome, data_nasc, cpf, sexo, altura, peso):
+    logger.info(f"Solicitação recebida para atualizar pessoa: nome={nome}, data_nasc={data_nasc}, cpf={cpf}, sexo={sexo}, altura={altura}, peso={peso}")
+    try:
+        pessoa = Pessoa.objects.get(nome=nome)
+        pessoa.nome = nome
+        pessoa.data_nasc = data_nasc
+        pessoa.cpf = cpf
+        pessoa.sexo = sexo
+        pessoa.altura = altura
+        pessoa.peso = peso
+        pessoa.save()
+        logger.info(f"Pessoa atualizada com sucesso: nome={pessoa.nome}")
+        return pessoa
+    except Pessoa.DoesNotExist:
+        logger.error("Pessoa não encontrada.")
+        return None
 
 def listar_pessoas():
-    logger.info("Solicitação recebida para listar todas as pessoas")
-    return Pessoa.objects.all()
-
-def calcular_peso_ideal():
     logger.info("Solicitação recebida para listar todas as pessoas")
     return Pessoa.objects.all()
