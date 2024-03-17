@@ -37,10 +37,11 @@ const PessoaList = () => {
   const handleBuscarPessoas = async () => {
     try {
       const response = await axios.get(`http://localhost:8000/pessoa/${termoPesquisa}`);
-      setPessoasEncontradas([response.data]); // Colocando a pessoa encontrada em um array para manter a estrutura consistente
       if (response.data) {
+        setPessoasEncontradas([response.data]); // Colocando a pessoa encontrada em um array para manter a estrutura consistente
         setSucessoMensagem(`Resultados da pesquisa para "${termoPesquisa}": 1 pessoa encontrada.`);
       } else {
+        setPessoasEncontradas([]);
         setSucessoMensagem(`Nenhuma pessoa encontrada para "${termoPesquisa}".`);
       }
     } catch (error) {
@@ -62,8 +63,9 @@ const PessoaList = () => {
   const handleCalcularPesoIdeal = async () => {
     try {
       const response = await axios.get(`http://localhost:8000/pessoa/calcular-peso-ideal/${pessoaSelecionada.nome}`);
+      const pesoIdealFormatted = response.data.peso_ideal.toFixed(2); // Formatar para duas casas decimais
       setModalIsOpen(true);
-      setSucessoMensagem(`O peso ideal para ${pessoaSelecionada.nome} é: ${response.data.peso_ideal}`);
+      setSucessoMensagem(`O peso ideal para ${pessoaSelecionada.nome} é: ${pesoIdealFormatted}kg`);
     } catch (error) {
       console.error('Erro ao calcular peso ideal:', error);
     }
