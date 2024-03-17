@@ -1,0 +1,137 @@
+/* PessoaList.css */
+.pessoa-list-container {
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+.mensagem-sucesso {
+  color: #4caf50;
+}
+
+.filtro-container {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.input-filtro {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.button-verde {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button-verde:hover {
+  background-color: #45a049;
+}
+
+.botoes-opcoes {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center; /* Centraliza os botões horizontalmente */
+}
+
+.botoes-container {
+  display: flex;
+  gap: 10px; /* Espaço entre os botões */
+}
+
+.pessoa-table {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.pessoa-info {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+}
+
+.pessoa-info:last-child {
+  border-bottom: none;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 80%;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.button-fechar {
+  border: none;
+  background-color: #ccc;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button-fechar:hover {
+  background-color: #999;
+}
+
+.button-vermelho {
+  border: none;
+  background-color: #f44336;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button-vermelho:hover {
+  background-color: #d32f2f;
+}
+
+.button-cinza {
+  border: none;
+  background-color: #ccc;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button-cinza:hover {
+  background-color: #999;
+}
+
+.input-modal {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.spaced {
+  margin-right: 10px;
+  border: 1px solid black;
+}
