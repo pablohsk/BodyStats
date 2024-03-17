@@ -1,0 +1,22 @@
+<table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Data de Nascimento</th>
+        <th>CPF</th>
+        <th>Sexo</th>
+        <th>Altura</th>
+        <th>Peso</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pessoa of pessoas">
+        <td>{{ pessoa.nome }}</td>
+        <td>{{ pessoa.data_nasc }}</td>
+        <td>{{ pessoa.cpf }}</td>
+        <td>{{ pessoa.sexo }}</td>
+        <td>{{ pessoa.altura }}</td>
+        <td>{{ pessoa.peso }}</td>
+      </tr>
+    </tbody>
+  </table>  

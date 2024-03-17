@@ -1,6 +1,15 @@
-import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { AppComponent } from './app/app.component';
+import { enableProdMode } from '@angular/core';
+import { renderModule } from '@angular/platform-server';
+import AppServerModule from './app/app.config.server';
+import { environment } from './environments/enviroments';
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+if (environment.production) {
+  enableProdMode();
+}
+
+renderModule(AppServerModule, {
+  document: '<app-root></app-root>',
+  url: '/'
+}).then(html => {
+  console.log(html);
+});
