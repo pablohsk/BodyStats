@@ -115,12 +115,46 @@ Ao clicar em uma pessoa da lista, o front-end exibe os detalhes dessa pessoa, in
 ### Back-end (Django)
 O back-end fornece uma API RESTful para interação com o banco de dados PostgreSQL e outras funcionalidades.
 
-## Configuração
-### 1. Instalação de Dependências: - Execute npm install no diretório my-node-project/client. - Execute pip install -r requirements.txt no diretório raiz do projeto Django.
-### 2. Configuração do Banco de Dados: - Certifique-se de ter um banco de dados PostgreSQL em execução. - Edite o arquivo settings.py do Django com as configurações do seu banco de dados.
-### 3. Execução do Front-end: - No diretório my-node-project/client, execute npm start para iniciar a aplicação React.
-### 4. Execução do Back-end: - No diretório raiz do projeto Django, execute python manage.py runserver para iniciar o servidor Django.
-### 5. Acesso à Aplicação: - Abra o navegador e acesse http://localhost:3000 para utilizar a aplicação React.
+## Configurações
+#### Requisitos do Ambiente
+Python 3.x instalado.
+Node.js e npm instalados para o ambiente de front-end.
+PostgreSQL instalado e configurado.
+Django instalado.
+E 
+
+#### Configuração do Ambiente de Desenvolvimento
+#####Clone o repositório do projeto do GitHub:
+
+git clone https://github.com/seu-usuario/seu-projeto.git
+
+#####Crie um ambiente virtual Python e ative-o:
+
+`cd seu-projeto`
+`python3 -m venv venv`
+`source venv/bin/activate`  # Linux/macOS
+
+#####No diretório do front-end, instale as dependências do Node.js:
+
+`cd client`
+`npm install`
+
+#####Configure o banco de dados PostgreSQL:
+
+Abra o arquivo settings.py em BodyStats/BodyStats/settings.py.
+Verifique as configurações em DATABASES e ajuste conforme necessário, incluindo o nome do banco de dados, usuário e senha.
+Certifique-se de que o PostgreSQL esteja em execução e acessível.
+
+#####Execução do Servidor
+
+#####Para iniciar o servidor Django, execute:
+
+`python manage.py runserver`
+
+#####Para iniciar o servidor de desenvolvimento do React, execute:
+
+`cd client`
+`npm start`
 
 ## Desenvolvedor
 
