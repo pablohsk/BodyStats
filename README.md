@@ -124,17 +124,17 @@ Django instalado.
 E 
 
 #### Configuração do Ambiente de Desenvolvimento
-####Clone o repositório do projeto do GitHub:
+###Clone o repositório do projeto do GitHub:
 
 git clone https://github.com/seu-usuario/seu-projeto.git
 
-####Crie um ambiente virtual Python e ative-o:
+###Crie um ambiente virtual Python e ative-o:
 
 `cd seu-projeto`
 `python3 -m venv venv`
 `source venv/bin/activate`  # Linux/macOS
 
-####No diretório do front-end, instale as dependências do Node.js:
+###No diretório do front-end, instale as dependências do Node.js:
 
 `cd client`
 `npm install`
@@ -145,13 +145,13 @@ Abra o arquivo settings.py em BodyStats/BodyStats/settings.py.
 Verifique as configurações em DATABASES e ajuste conforme necessário, incluindo o nome do banco de dados, usuário e senha.
 Certifique-se de que o PostgreSQL esteja em execução e acessível.
 
-####Execução do Servidor
+###Execução do Servidor
 
-####Para iniciar o servidor Django, execute:
+###Para iniciar o servidor Django, execute:
 
 `python manage.py runserver`
 
-####Para iniciar o servidor de desenvolvimento do React, execute:
+###Para iniciar o servidor de desenvolvimento do React, execute:
 
 `cd client`
 `npm start`
