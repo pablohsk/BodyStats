@@ -164,16 +164,4 @@ Qualquer dúvida ou sugestão, sinta-se à vontade para entrar em contato. Obrig
 
 Se precisar de mais alguma coisa, estou à disposição para ajudar!
 
-
-.              # # # # # # # # # #  
-.            #   #   #   #   #   #  #
-.            #   #   #   #   #   #  #
-.              #         #         #
 .                #  Me contrata! #
-.                  #           #
-.                    #       #
-.                      #   #
-.                        #
-.            #   #   #   #   #   #   #   #  
-.            #   #   #   #   #   #   #   #  
-.            #   #   #   #   #   #   #   #   
