@@ -124,37 +124,71 @@ Django instalado.
 E 
 
 #### Configuração do Ambiente de Desenvolvimento
-#####Clone o repositório do projeto do GitHub:
+####Clone o repositório do projeto do GitHub:
 
 git clone https://github.com/seu-usuario/seu-projeto.git
 
-#####Crie um ambiente virtual Python e ative-o:
+####Crie um ambiente virtual Python e ative-o:
 
 `cd seu-projeto`
 `python3 -m venv venv`
 `source venv/bin/activate`  # Linux/macOS
 
-#####No diretório do front-end, instale as dependências do Node.js:
+####No diretório do front-end, instale as dependências do Node.js:
 
 `cd client`
 `npm install`
 
-#####Configure o banco de dados PostgreSQL:
+####Configure o banco de dados PostgreSQL:
 
 Abra o arquivo settings.py em BodyStats/BodyStats/settings.py.
 Verifique as configurações em DATABASES e ajuste conforme necessário, incluindo o nome do banco de dados, usuário e senha.
 Certifique-se de que o PostgreSQL esteja em execução e acessível.
 
-#####Execução do Servidor
+####Execução do Servidor
 
-#####Para iniciar o servidor Django, execute:
+####Para iniciar o servidor Django, execute:
 
 `python manage.py runserver`
 
-#####Para iniciar o servidor de desenvolvimento do React, execute:
+####Para iniciar o servidor de desenvolvimento do React, execute:
 
 `cd client`
 `npm start`
+
+## Endpoints
+
+A seguir estão os endpoints disponíveis neste projeto:
+
+- **Listar todas as pessoas**
+  - Método: GET
+  - URL: `/pessoa`
+  - Descrição: Retorna uma lista de todas as pessoas cadastradas.
+
+- **Buscar pessoa por parâmetro**
+  - Método: GET
+  - URL: `/pessoa/<parametro>`
+  - Descrição: Retorna os detalhes de uma pessoa com base no parâmetro fornecido.
+
+- **Incluir pessoa**
+  - Método: POST
+  - URL: `/pessoa/incluir/`
+  - Descrição: Adiciona uma nova pessoa ao banco de dados.
+
+- **Alterar pessoa por nome**
+  - Método: PUT
+  - URL: `/pessoa/alterar/<nome>`
+  - Descrição: Altera os dados de uma pessoa com o nome fornecido.
+
+- **Excluir pessoa por nome**
+  - Método: DELETE
+  - URL: `/pessoa/excluir/<nome>`
+  - Descrição: Remove uma pessoa do banco de dados com o nome fornecido.
+
+- **Calcular peso ideal de uma pessoa por nome**
+  - Método: GET
+  - URL: `/pessoa/calcular-peso-ideal/<nome>`
+  - Descrição: Calcula e retorna o peso ideal de uma pessoa com base no nome fornecido.
 
 ## Desenvolvedor
 
